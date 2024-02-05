@@ -111,7 +111,11 @@ def get_virtual_table_metadata(dataset: SqlaTable) -> list[ResultSetColumnType]:
     sql = dataset.get_template_processor().process_template(
         dataset.sql, **dataset.template_params_dict
     )
+    print("GET VIRTUAL TABLE METADATA")
+    print(f"{sql=}")
+    breakpoint()
     parsed_query = ParsedQuery(sql, engine=db_engine_spec.engine)
+    breakpoint()
     if not db_engine_spec.is_readonly_query(parsed_query):
         raise SupersetSecurityException(
             SupersetError(
@@ -140,11 +144,12 @@ def get_columns_description(
     # TODO(villebro): refactor to use same code that's used by
     #  sql_lab.py:execute_sql_statements
     db_engine_spec = database.db_engine_spec
+    breakpoint()
     try:
         with database.get_raw_connection(schema=schema) as conn:
             cursor = conn.cursor()
             query = database.apply_limit_to_sql(query, limit=1)
-            cursor.execute(query)
+            cursor.execute(query) # SELECT * FROM {{ my_table }}, ne peut pas executer car le template n'a pas ete injecte
             db_engine_spec.execute(cursor, query)
             result = db_engine_spec.fetch_data(cursor, limit=1)
             result_set = SupersetResultSet(result, cursor.description, db_engine_spec)

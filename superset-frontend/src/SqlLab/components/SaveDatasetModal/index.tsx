@@ -144,7 +144,7 @@ const updateDataset = async (
   return data.json.result;
 };
 
-const UNTITLED = t('Untitled Dataset');
+const UNTITLED = t('Untitled Dataset 2');
 
 export const SaveDatasetModal = ({
   visible,
@@ -350,14 +350,14 @@ export const SaveDatasetModal = ({
   return (
     <StyledModal
       show={visible}
-      title={t('Save or Overwrite Dataset')}
+      title={t('Save or Overwrite Dataset?')}
       onHide={onHide}
       footer={
         <>
           {newOrOverwrite === DatasetRadioState.SaveNew && (
             <Button
               disabled={disableSaveAndExploreBtn}
-              buttonStyle="primary"
+              buttonStyle="secondary"
               onClick={handleSaveInDataset}
               loading={loading}
             >
@@ -396,7 +396,7 @@ export const SaveDatasetModal = ({
               value={newOrOverwrite}
             >
               <Radio className="sdm-radio" value={1}>
-                {t('Save as new')}
+                {t('Save as new hehe')}
                 <Input
                   className="sdm-input"
                   value={datasetName}

@@ -46,18 +46,25 @@ class CreateDatasetCommand(CreateMixin, BaseCommand):
         self.validate()
         try:
             # Creates SqlaTable (Dataset)
+            print("BEFORE DatasetDAO.create")
             dataset = DatasetDAO.create(attributes=self._properties, commit=False)
+            print("AFTER DatasetDAO.create")
 
             # Updates columns and metrics from the dataset
+            print("BEFORE dataset.fetch_metadata")
+            breakpoint()
             dataset.fetch_metadata(commit=False)
+            print("AFTER dataset.fetch_metadata")
             db.session.commit()
         except (SQLAlchemyError, DAOCreateFailedError) as ex:
             logger.warning(ex, exc_info=True)
             db.session.rollback()
+            print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
             raise DatasetCreateFailedError() from ex
         return dataset
 
     def validate(self) -> None:
+        print("VALIDATE")
         exceptions: list[ValidationError] = []
         database_id = self._properties["database"]
         table_name = self._properties["table_name"]
@@ -65,14 +72,30 @@ class CreateDatasetCommand(CreateMixin, BaseCommand):
         sql = self._properties.get("sql", None)
         owner_ids: Optional[list[int]] = self._properties.get("owners")
 
+        print(f"""
+        {exceptions=}
+        {database_id=}
+        {table_name=}
+        {schema=}
+        {sql=}
+        {owner_ids=}
+              """)
+
         # Validate uniqueness
         if not DatasetDAO.validate_uniqueness(database_id, schema, table_name):
             exceptions.append(DatasetExistsValidationError(table_name))
 
+        print("AFTER VALIDATE UNIQUENESS")
+        print(f"{exceptions=}")
+
         # Validate/Populate database
         database = DatasetDAO.get_database_by_id(database_id)
+        print(f"{database=}")
         if not database:
             exceptions.append(DatabaseNotFoundValidationError())
+
+        print("AFTER VALIDATE/POPULATE DATABASE")
+        print(f"{exceptions=}")
         self._properties["database"] = database
 
         # Validate table exists on dataset if sql is not provided
@@ -85,6 +108,7 @@ class CreateDatasetCommand(CreateMixin, BaseCommand):
             exceptions.append(TableNotFoundValidationError(table_name))
 
         if sql:
+            print("SQL EXISTS")
             try:
                 security_manager.raise_for_access(
                     database=database,
@@ -93,10 +117,18 @@ class CreateDatasetCommand(CreateMixin, BaseCommand):
                 )
             except SupersetSecurityException as ex:
                 exceptions.append(DatasetDataAccessIsNotAllowed(ex.error.message))
+            print("AFTER SECURITY MANAGER RAISE FOR ACCESS")
+            print(f"{exceptions=}")
         try:
             owners = self.populate_owners(owner_ids)
             self._properties["owners"] = owners
+            print("AFTER POPULATE OWNERS")
+            print(f"{exceptions=}")
+            print(f"self._properties['owners']=")
         except ValidationError as ex:
             exceptions.append(ex)
+        print("BEFORE LAST")
+        print(f"{exceptions=}")
         if exceptions:
             raise DatasetInvalidError(exceptions=exceptions)
+        print("NO EXCEPTIONS RAISED")

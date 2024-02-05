@@ -35,15 +35,8 @@ import {
 } from './styles';
 import { DatabaseObject, ExtraJson } from '../types';
 
-const ExtraOptions = ({
-  db,
-  onInputChange,
-  onTextChange,
-  onEditorChange,
-  onExtraInputChange,
-  onExtraEditorChange,
-  extraExtension,
-}: {
+// Define an interface for the component props
+interface ExtraOptionsProps {
   db: DatabaseObject | null;
   onInputChange: EventHandler<ChangeEvent<HTMLInputElement>>;
   onTextChange: EventHandler<ChangeEvent<HTMLTextAreaElement>>;
@@ -51,6 +44,16 @@ const ExtraOptions = ({
   onExtraInputChange: EventHandler<ChangeEvent<HTMLInputElement>>;
   onExtraEditorChange: Function;
   extraExtension: DatabaseConnectionExtension | undefined;
+}
+
+const ExtraOptions: React.FC<ExtraOptionsProps> = ({
+  db,
+  onInputChange,
+  onTextChange,
+  onEditorChange,
+  onExtraInputChange,
+  onExtraEditorChange,
+  extraExtension,
 }) => {
   const expandableModalIsOpen = !!db?.expose_in_sqllab;
   const createAsOpen = !!(db?.allow_ctas || db?.allow_cvas);
@@ -66,6 +69,7 @@ const ExtraOptions = ({
     }
     return value;
   });
+  console.log("EXTRA OPTIONS extraJson", extraJson);
 
   const ExtraExtensionComponent = extraExtension?.component;
   const ExtraExtensionLogo = extraExtension?.logo;
@@ -225,9 +229,10 @@ const ExtraOptions = ({
                 <IndeterminateCheckbox
                   id="expand_rows"
                   indeterminate={false}
-                  checked={!!extraJson?.schema_options?.expand_rows}
+                  /*checked={!!extraJson?.schema_options?.expand_rows}*/
+                  checked={true}
                   onChange={onExtraInputChange}
-                  labelText={t('Enable row expansion in schemas')}
+                  labelText={t('Enable row expansion in schemas?')}
                 />
                 <InfoTooltip
                   tooltip={t(

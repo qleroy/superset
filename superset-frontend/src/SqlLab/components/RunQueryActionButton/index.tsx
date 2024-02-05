@@ -88,8 +88,16 @@ const RunQueryActionButton = ({
   runQuery,
   stopQuery,
 }: RunQueryActionButtonProps) => {
+
+  console.log("buildText", buildText);
+  console.log("onClick", onClick);
+  console.log("runQuery", runQuery);
+  console.log("stopQuery", stopQuery);
+
   const theme = useTheme();
   const userOS = detectOS();
+  console.log("userOS", userOS);
+  console.log("theme", theme);
 
   const { selectedText, sql } = useQueryEditor(queryEditorId, [
     'selectedText',
@@ -99,14 +107,17 @@ const RunQueryActionButton = ({
   const shouldShowStopBtn =
     !!queryState && ['running', 'pending'].indexOf(queryState) > -1;
 
+  console.log("overlayCreateAsMenu", overlayCreateAsMenu);
   const ButtonComponent: React.FC<QueryButtonProps> = overlayCreateAsMenu
     ? (DropdownButton as React.FC)
     : Button;
 
   const sqlContent = selectedText || sql || '';
+  console.log("sqlContent", sqlContent);
   const isDisabled = !sqlContent
     ?.replace(/(\/\*[^*]*\*\/)|(\/\/[^*]*)|(--[^.].*)/gm, '')
     .trim();
+  console.log("isDisabled", isDisabled);
 
   const stopButtonTooltipText = useMemo(
     () =>
@@ -115,6 +126,7 @@ const RunQueryActionButton = ({
         : t('Stop running (Ctrl + e)'),
     [userOS],
   );
+  console.log("stopButtonTooltipText", stopButtonTooltipText);
 
   return (
     <StyledButton>

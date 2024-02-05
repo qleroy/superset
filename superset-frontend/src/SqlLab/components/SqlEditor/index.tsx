@@ -113,7 +113,9 @@ import KeyboardShortcutButton, {
 } from '../KeyboardShortcutButton';
 
 const bootstrapData = getBootstrapData();
+console.log("bootstrapData", bootstrapData);
 const scheduledQueriesConf = bootstrapData?.common?.conf?.SCHEDULED_QUERIES;
+console.log("scheduledQueriesConf", scheduledQueriesConf);
 
 const StyledToolbar = styled.div`
   padding: ${({ theme }) => theme.gridUnit * 2}px;
@@ -213,6 +215,7 @@ const StyledSqlEditor = styled.div`
 `;
 
 const extensionsRegistry = getExtensionsRegistry();
+console.log("extensionsRegistry", extensionsRegistry);
 
 export type Props = {
   tables: ExtendedTable[];
@@ -243,6 +246,14 @@ const SqlEditor: React.FC<Props> = ({
   saveQueryWarning,
   scheduleQueryWarning,
 }) => {
+  console.log("SqlEditor Props tables", tables);
+  console.log("SqlEditor Props queryEditor", queryEditor);
+  console.log("SqlEditor Props defaultQueryLimit", defaultQueryLimit);
+  console.log("SqlEditor Props maxRow", maxRow);
+  console.log("SqlEditor Props displayLimit", displayLimit);
+  console.log("SqlEditor Props saveQueryWarning", saveQueryWarning);
+  console.log("SqlEditor Props scheduleQueryWarning", scheduleQueryWarning);
+
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -268,6 +279,9 @@ const SqlEditor: React.FC<Props> = ({
       hideLeftBar,
     };
   }, shallowEqual);
+  console.log("SqlEditor SELECTED DATA database", database);
+  console.log("SqlEditor SELECTED DATA latestQuery", latestQuery);
+  console.log("SqlEditor SELECTED DATA hideLeftBar", hideLeftBar);
 
   const [height, setHeight] = useState(0);
   const [autorun, setAutorun] = useState(queryEditor.autorun);
@@ -290,6 +304,7 @@ const SqlEditor: React.FC<Props> = ({
 
   const SqlFormExtension = extensionsRegistry.get('sqleditor.extension.form');
 
+  console.log("BEFORE startQuery is defined");
   const startQuery = useCallback(
     (ctasArg = false, ctas_method = CtasEnum.Table) => {
       if (!database) {
@@ -310,6 +325,7 @@ const SqlEditor: React.FC<Props> = ({
     },
     [ctas, database, defaultQueryLimit, dispatch, queryEditor],
   );
+  console.log("AFTER startQuery is defined");
 
   const formatCurrentQuery = useCallback(() => {
     dispatch(formatQuery(queryEditor));
@@ -327,6 +343,9 @@ const SqlEditor: React.FC<Props> = ({
       startQuery();
     }
   };
+  console.log("sqlEditor database", database);
+  console.log("sqlEditor runQuery", runQuery);
+  console.log("sqlEditor startQuery", startQuery);
 
   useEffect(() => {
     if (autorun) {
@@ -598,6 +617,8 @@ const SqlEditor: React.FC<Props> = ({
     setShowCreateAsModal(false);
     setCtas('');
   };
+  console.log("sqlEditor CtasEnum", CtasEnum);
+  console.log("sqlEditor CtasEnum.Table", CtasEnum.Table);
 
   const createViewAs = () => {
     startQuery(true, CtasEnum.View);
@@ -669,6 +690,9 @@ const SqlEditor: React.FC<Props> = ({
     const { allow_ctas: allowCTAS, allow_cvas: allowCVAS } = database || {};
 
     const showMenu = allowCTAS || allowCVAS;
+    console.log("allowCTAS", allowCTAS);
+    console.log("allowCVAS", allowCVAS);
+    console.log("showMenu", showMenu);
     const runMenuBtn = (
       <Menu>
         {allowCTAS && (

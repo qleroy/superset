@@ -249,7 +249,6 @@ export function dbReducer(
   let parametersCatalog;
   let actionPayloadJson;
   const extraJson: ExtraJson = JSON.parse(trimmedState.extra || '{}');
-
   switch (action.type) {
     case ActionType.ExtraEditorChange:
       // "extra" payload in state is a string
@@ -284,6 +283,7 @@ export function dbReducer(
         };
       }
       if (action.payload.name === 'schemas_allowed_for_file_upload') {
+        console.log("schema_allowed_for_file_upload");
         return {
           ...trimmedState,
           extra: JSON.stringify({
@@ -308,17 +308,38 @@ export function dbReducer(
         };
       }
       if (action.payload.name === 'expand_rows') {
+        console.log("dbReducer schema_options", extraJson?.schema_options);
+        console.log("dbReducer action", action);
+        console.log("dbReducer action.payload.checked", action.payload);
+        console.log("dbReducer action.payload.name", action.payload.name);
+        console.log("dbReducer !!action.payload.value", !!action.payload.value);
+        console.log("dbReducer extra", JSON.stringify({
+          ...extraJson,
+          schema_options: {
+            ...extraJson?.schema_options,
+            [action.payload.name]: !!action.payload.value,
+          }
+        }));
         return {
           ...trimmedState,
           extra: JSON.stringify({
             ...extraJson,
             schema_options: {
               ...extraJson?.schema_options,
-              [action.payload.name]: !!action.payload.value,
+              /*[action.payload.name]: !!action.payload.value,*/
+              [action.payload.name]:
+                action.payload.type === 'checkbox'
+                  ? action.payload.checked
+                  : action.payload.value,
             },
           }),
         };
       }
+      console.log("dbReducer schema_options", extraJson?.schema_options);
+      console.log("dbReducer action", action);
+      console.log("dbReducer action.payload.checked", action.payload);
+      console.log("dbReducer action.payload.name", action.payload.name);
+      console.log("dbReducer !!action.payload.value", !!action.payload.value);
       return {
         ...trimmedState,
         extra: JSON.stringify({
@@ -730,6 +751,7 @@ const DatabaseModal: FunctionComponent<DatabaseModalProps> = ({
   });
 
   const onChange = (type: any, payload: any) => {
+    console.log("ONCHANGE", type, payload, payload.type, payload.name, payload.checked, payload.value);
     setDB({ type, payload } as DBReducerActionType);
   };
 
@@ -1611,12 +1633,14 @@ const DatabaseModal: FunctionComponent<DatabaseModalProps> = ({
             value: target.value,
           })
         }
-        onExtraInputChange={({ target }: { target: HTMLInputElement }) =>
+        onExtraInputChange={
+          ({ target }: { target: HTMLInputElement }) => {
+            console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target", target);
           onChange(ActionType.ExtraInputChange, {
             name: target.name,
             value: target.value,
           })
-        }
+        }}
         onRemoveTableCatalog={(idx: number) => {
           setDB({
             type: ActionType.RemoveTableCatalogSheet,
@@ -1671,14 +1695,15 @@ const DatabaseModal: FunctionComponent<DatabaseModalProps> = ({
           onEditorChange={(payload: { name: string; json: any }) =>
             onChange(ActionType.EditorChange, payload)
           }
-          onExtraInputChange={({ target }: { target: HTMLInputElement }) => {
+          onExtraInputChange={({ target }: { target: HTMLInputElement }) => {{
+            console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target", target);
             onChange(ActionType.ExtraInputChange, {
               type: target.type,
               name: target.name,
               checked: target.checked,
               value: target.value,
             });
-          }}
+          }}}
           onExtraEditorChange={(payload: { name: string; json: any }) =>
             onChange(ActionType.ExtraEditorChange, payload)
           }
@@ -1882,14 +1907,19 @@ const DatabaseModal: FunctionComponent<DatabaseModalProps> = ({
             onEditorChange={(payload: { name: string; json: any }) =>
               onChange(ActionType.EditorChange, payload)
             }
-            onExtraInputChange={({ target }: { target: HTMLInputElement }) => {
+            onExtraInputChange={({ target }: { target: HTMLInputElement }) => {{
+              console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target", target);
+              console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target.type", target.type);
+              console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target.name", target.name);
+              console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target.checked", target.checked);
+              console.log("DATABASEMODAL ONEXTRAINPUTCHANGE target.value", target.value);
               onChange(ActionType.ExtraInputChange, {
                 type: target.type,
                 name: target.name,
                 checked: target.checked,
                 value: target.value,
               });
-            }}
+            }}}
             onExtraEditorChange={(payload: { name: string; json: any }) => {
               onChange(ActionType.ExtraEditorChange, payload);
             }}
