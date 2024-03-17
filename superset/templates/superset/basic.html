@@ -66,6 +66,29 @@ governing permissions and limitations under the License. #}
       type="text/css"
       href="{{ assets_prefix }}/static/appbuilder/css/select2/select2-bootstrap.min.css"
     />
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/dsfr/dist/dsfr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/dsfr/dist/utility/utility.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/dsfr-chart/Charts/dsfr-chart.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/local/css/tail_css_custom_extra.css"
+    />
 
     {{ css_bundle("theme") }} {% if entry %} {{ css_bundle(entry) }} {% endif %}
     {% endblock %} {{ js_bundle("theme") }}

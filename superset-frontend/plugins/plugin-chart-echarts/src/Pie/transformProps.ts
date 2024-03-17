@@ -123,14 +123,12 @@ function getTotalValuePadding({
       : '0';
   }
   if (chartPadding.left) {
-    padding.left = `${
-      50 + ((chartPadding.left - LEGEND_WIDTH) / width / 2) * 100
-    }%`;
+    padding.left = `${50 + ((chartPadding.left - LEGEND_WIDTH) / width / 2) * 100
+      }%`;
   }
   if (chartPadding.right) {
-    padding.left = `${
-      50 - ((chartPadding.right + LEGEND_WIDTH) / width / 2) * 100
-    }%`;
+    padding.left = `${50 - ((chartPadding.right + LEGEND_WIDTH) / width / 2) * 100
+      }%`;
   }
   return padding;
 }
@@ -206,7 +204,7 @@ export default function transformProps(
     };
   }, {});
 
-  const { setDataMask = () => {}, onContextMenu } = hooks;
+  const { setDataMask = () => { }, onContextMenu } = hooks;
 
   const colorFn = CategoricalColorNamespace.getScale(colorScheme as string);
   const numberFormatter = getValueFormatter(
@@ -291,15 +289,17 @@ export default function transformProps(
       minShowLabelAngle,
       label: labelsOutside
         ? {
-            ...defaultLabel,
-            position: 'outer',
-            alignTo: 'none',
-            bleedMargin: 5,
-          }
+          ...defaultLabel,
+          position: 'outer',
+          alignTo: 'none',
+          bleedMargin: 5,
+          formatter: '{b}: {c} \n ({d}%)'
+        }
         : {
-            ...defaultLabel,
-            position: 'inner',
-          },
+          ...defaultLabel,
+          position: 'inner',
+          formatter: '{b}: {c} \n ({d}%)'
+        },
       emphasis: {
         label: {
           show: true,
@@ -333,15 +333,15 @@ export default function transformProps(
     },
     graphic: showTotal
       ? {
-          type: 'text',
-          ...getTotalValuePadding({ chartPadding, donut, width, height }),
-          style: {
-            text: t('Total: %s', numberFormatter(totalValue)),
-            fontSize: 16,
-            fontWeight: 'bold',
-          },
-          z: 10,
-        }
+        type: 'text',
+        ...getTotalValuePadding({ chartPadding, donut, width, height }),
+        style: {
+          text: t('Total: %s', numberFormatter(totalValue)),
+          fontSize: 16,
+          fontWeight: 'bold',
+        },
+        z: 10,
+      }
       : null,
     series,
   };

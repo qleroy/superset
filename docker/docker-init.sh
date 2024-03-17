@@ -64,6 +64,10 @@ echo_step "3" "Starting" "Setting up roles and perms"
 superset init
 echo_step "3" "Complete" "Setting up roles and perms"
 
+apt update
+apt install -y wget unzip
+/app/docker/docker-dsfr.sh
+
 if [ "$SUPERSET_LOAD_EXAMPLES" = "yes" ]; then
     # Load some data to play with
     echo_step "4" "Starting" "Loading examples"

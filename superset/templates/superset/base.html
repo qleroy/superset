@@ -29,8 +29,31 @@
       {% if favicon.sizes %}sizes={{favicon.sizes}}{% endif %}
       href="{{ "" if favicon.href.startswith("http") else assets_prefix }}{{favicon.href}}"
     >
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
   {% endfor %}
   {{ css_bundle("theme") }}
+     <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/dsfr/dist/dsfr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/dsfr/dist/utility/utility.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/dsfr-chart/Charts/dsfr-chart.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ assets_prefix }}/static/assets/local/css/tail_css_custom_extra.css"
+    />
 {% endblock %}
 
 {% block head_js %}

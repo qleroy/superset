@@ -23,3 +23,16 @@
   good place to include your custom frontend code, such as
   scripts to initialize google analytics, intercom, segment, etc.
 #}
+<script
+  type="module"
+  src="{{ assets_prefix }}/static/assets/dsfr/dist/dsfr.module.min.js">
+</script>
+<script
+  type="text/javascript"
+  nomodule
+  src="{{ assets_prefix }}/static/assets/dsfr/dist/dsfr.nomodule.min.js">
+</script>
+<script
+  defer
+    src="{{ assets_prefix }}/static/assets/dsfr-chart/Charts/dsfr-chart.umd.js">
+</script>

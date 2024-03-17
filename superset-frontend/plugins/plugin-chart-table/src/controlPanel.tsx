@@ -121,8 +121,8 @@ const percentMetricsControl: typeof sharedControls.metrics = {
   label: t('Percentage metrics'),
   description: t(
     'Select one or many metrics to display, that will be displayed in the percentages of total. ' +
-      'Percentage metrics will be calculated only from data within the row limit. ' +
-      'You can use an aggregation function on a column or write custom SQL to create a percentage metric.',
+    'Percentage metrics will be calculated only from data within the row limit. ' +
+    'You can use an aggregation function on a column or write custom SQL to create a percentage metric.',
   ),
   visibility: isAggMode,
   resetOnHide: false,
@@ -227,8 +227,8 @@ const config: ControlPanelConfig = {
               ) => ({
                 columns: datasource?.columns[0]?.hasOwnProperty('filterable')
                   ? (datasource as Dataset)?.columns?.filter(
-                      (c: ColumnMeta) => c.filterable,
-                    )
+                    (c: ColumnMeta) => c.filterable,
+                  )
                   : datasource?.columns,
                 savedMetrics: defineSavedMetrics(datasource),
                 // current active adhoc metrics
@@ -499,14 +499,14 @@ const config: ControlPanelConfig = {
                 const numericColumns =
                   Array.isArray(colnames) && Array.isArray(coltypes)
                     ? colnames
-                        .filter(
-                          (colname: string, index: number) =>
-                            coltypes[index] === GenericDataType.Numeric,
-                        )
-                        .map(colname => ({
-                          value: colname,
-                          label: verboseMap[colname] ?? colname,
-                        }))
+                      .filter(
+                        (colname: string, index: number) =>
+                          coltypes[index] === GenericDataType.Numeric,
+                      )
+                      .map(colname => ({
+                        value: colname,
+                        label: verboseMap[colname] ?? colname,
+                      }))
                     : [];
                 return {
                   removeIrrelevantConditions: chartStatus === 'success',

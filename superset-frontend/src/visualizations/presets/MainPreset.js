@@ -78,6 +78,18 @@ import {
 import { PivotTableChartPlugin as PivotTableChartPluginV2 } from '@superset-ui/plugin-chart-pivot-table';
 import { HandlebarsChartPlugin } from '@superset-ui/plugin-chart-handlebars';
 import TimeTableChartPlugin from '../TimeTable';
+import { QleroyLeaflet } from 'qleroy-leaflet';
+import { QleroyMaplibre } from 'qleroy-maplibre';
+import { QleroyBadgeDsfr } from 'qleroy-badge-dsfr';
+import { QleroyAlertDsfr } from 'qleroy-alert-dsfr';
+import { QleroyCalloutDsfr } from 'qleroy-callout-dsfr';
+import { QleroyTileDsfr } from 'qleroy-tile-dsfr';
+import { QleroyTableDsfr } from 'qleroy-table-dsfr';
+import { QleroyFooterDsfr } from 'qleroy-footer-dsfr';
+import { QleroyHeaderDsfr } from 'qleroy-header-dsfr';
+import { QleroyDsfrScatterChart } from 'qleroy-dsfr-scatter-chart';
+import { QleroyDsfrGaugeChart } from 'qleroy-dsfr-gauge-chart';
+import { QleroyDsfrMapChart } from 'qleroy-dsfr-map-chart';
 
 export default class MainPreset extends Preset {
   constructor() {
@@ -85,10 +97,10 @@ export default class MainPreset extends Preset {
       FeatureFlag.ChartPluginsExperimental,
     )
       ? [
-          new BigNumberPeriodOverPeriodChartPlugin().configure({
-            key: 'pop_kpi',
-          }),
-        ]
+        new BigNumberPeriodOverPeriodChartPlugin().configure({
+          key: 'pop_kpi',
+        }),
+      ]
       : [];
 
     super({
@@ -166,6 +178,18 @@ export default class MainPreset extends Preset {
         new EchartsSunburstChartPlugin().configure({ key: 'sunburst_v2' }),
         new HandlebarsChartPlugin().configure({ key: 'handlebars' }),
         new EchartsBubbleChartPlugin().configure({ key: 'bubble_v2' }),
+        new QleroyLeaflet().configure({ key: 'qleroy_leaflet' }),
+        new QleroyMaplibre().configure({ key: 'qleroy_maplibre' }),
+        new QleroyBadgeDsfr().configure({ key: 'qleroy_badge_dsfr' }),
+        new QleroyAlertDsfr().configure({ key: 'qleroy_alert_dsfr' }),
+        new QleroyCalloutDsfr().configure({ key: 'qleroy_callout_dsfr' }),
+        new QleroyTileDsfr().configure({ key: 'qleroy_tile_dsfr' }),
+        new QleroyTableDsfr().configure({ key: 'qleroy_table_dsfr' }),
+        new QleroyFooterDsfr().configure({ key: 'qleroy_footer_dsfr' }),
+        new QleroyHeaderDsfr().configure({ key: 'qleroy_footer_dsfr' }),
+        new QleroyDsfrScatterChart().configure({ key: 'qleroy_dsfr_scatter_chart' }),
+        new QleroyDsfrGaugeChart().configure({ key: 'qleroy_dsfr_gauge_chart' }),
+        new QleroyDsfrMapChart().configure({ key: 'qleroy_dsfr_map_chart' }),
         ...experimentalPlugins,
       ],
     });

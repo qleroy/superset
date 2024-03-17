@@ -78,6 +78,8 @@ export default function buildQuery(formData: QueryFormData) {
       ...ensureIsArray(groupby),
     ];
 
+    debugger;
+
     return [
       {
         ...baseQueryObject,

@@ -74,8 +74,8 @@ function jsFunctionControl(
     ),
     warning: !isFeatureEnabled(FeatureFlag.EnableJavascriptControls)
       ? t(
-          'This functionality is disabled in your environment for security reasons.',
-        )
+        'This functionality is disabled in your environment for security reasons.',
+      )
       : null,
     readOnly: !isFeatureEnabled(FeatureFlag.EnableJavascriptControls),
   };
@@ -133,8 +133,8 @@ export const jsDataMutator = {
     t('JavaScript data interceptor'),
     t(
       'Define a javascript function that receives the data array used in the visualization ' +
-        'and is expected to return a modified version of that array. This can be used ' +
-        'to alter properties of the data, filter, or enrich the array.',
+      'and is expected to return a modified version of that array. This can be used ' +
+      'to alter properties of the data, filter, or enrich the array.',
     ),
   ),
 };
@@ -372,16 +372,18 @@ export const mapboxStyle = {
     clearable: false,
     renderTrigger: true,
     freeForm: true,
-    validators: [validateMapboxStylesUrl],
+    //validators: [validateMapboxStylesUrl],
     choices: [
       ['mapbox://styles/mapbox/streets-v9', t('Streets')],
       ['mapbox://styles/mapbox/dark-v9', t('Dark')],
-      ['mapbox://styles/mapbox/light-v9', t('Light')],
+      //['mapbox://styles/mapbox/light-v9', t('Light')],
+      ['http://167.86.122.249:9005/static/assets/maplibre_styles/osm-bright-gl-style.json', t('Light')],
       ['mapbox://styles/mapbox/satellite-streets-v9', t('Satellite Streets')],
       ['mapbox://styles/mapbox/satellite-v9', t('Satellite')],
       ['mapbox://styles/mapbox/outdoors-v9', t('Outdoors')],
     ],
-    default: 'mapbox://styles/mapbox/light-v9',
+    //default: 'mapbox://styles/mapbox/light-v9',
+    default: 'http://167.86.122.249:9005/static/assets/maplibre_styles/osm-bright-gl-style.json',
     description: t(
       'Base layer map style. See Mapbox documentation: %s',
       'https://docs.mapbox.com/help/glossary/style-url/',

@@ -143,7 +143,7 @@ const buildQuery: BuildQuery<TableChartFormData> = (
       formData.server_pagination &&
       options?.extras?.cachedChanges?.[formData.slice_id] &&
       JSON.stringify(options?.extras?.cachedChanges?.[formData.slice_id]) !==
-        JSON.stringify(queryObject.filters)
+      JSON.stringify(queryObject.filters)
     ) {
       queryObject = { ...queryObject, row_offset: 0 };
       updateExternalFormData(
@@ -195,6 +195,14 @@ const buildQuery: BuildQuery<TableChartFormData> = (
       ];
     }
 
+    console.groupCollapsed("TABLE queryContext");
+    const queryContext = [
+      queryObject,
+      ...extraQueries,
+    ];
+    console.log(queryContext);
+    console.groupEnd();
+
     return [queryObject, ...extraQueries];
   });
 };
@@ -215,7 +223,7 @@ export const cachedBuildQuery = (): BuildQuery<TableChartFormData> => {
         ownState: options?.ownState ?? {},
         hooks: {
           ...options?.hooks,
-          setDataMask: () => {},
+          setDataMask: () => { },
           setCachedChanges,
         },
       },

@@ -241,6 +241,19 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [<ControlSubSectionHeader>{t('Custom')}</ControlSubSectionHeader>],
+        [
+          {
+            name: 'label_formatter',
+            config: {
+              type: 'TextControl',
+              label: t('Label formatter'),
+              renderTrigger: true,
+              default: '{a}: {b}\n ({d}%)',
+              description: t('Label formatter'),
+            },
+          },
+        ],
       ],
     },
   ],

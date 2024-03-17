@@ -40,9 +40,11 @@ export function getControlsState(state, inputFormData) {
    * just yet because it's used in both the explore and dashboard views.
    * */
   // Getting a list of active control names for the current viz
+  console.log("GETCONTROLSSTATE");
   const formData = { ...inputFormData };
   const vizType =
     formData.viz_type || state.common?.conf.DEFAULT_VIZ_TYPE || 'table';
+  console.log('vizType', vizType);
 
   handleDeprecatedControls(formData);
   const controlsState = getAllControlsState(
@@ -61,14 +63,19 @@ export function getControlsState(state, inputFormData) {
 }
 
 export function applyDefaultFormData(inputFormData) {
+  console.log('APPLYDeFAULTFORMDATA');
   const datasourceType = inputFormData.datasource.split('__')[1];
   const vizType = inputFormData.viz_type;
+  console.log('inputFormData', inputFormData);
+  console.log('vizType', vizType);
+  console.log('datasourceType', datasourceType);
   const controlsState = getAllControlsState(
     vizType,
     datasourceType,
     null,
     inputFormData,
   );
+  console.log('controlsState', controlsState);
   const controlFormData = getFormDataFromControls(controlsState);
 
   const formData = {};
