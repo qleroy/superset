@@ -1,0 +1,55 @@
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+a {
+    background-image: none !important;
+}
+
+[href] {
+    background-image: none !important;
+}
+
+body {
+    font-family: Marianne !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: Marianne !important;
+}
+
+[data-test-viz-type=qleroy_badge_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_alert_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_callout_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_tile_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_table_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_footer_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_header_dsfr]>div[data-test=slice-header],
+[data-test-viz-type=qleroy_accordion_dsfr]>div[data-test=slice-header] {
+    display: none !important;
+}
+
+.dashboard-component[data-test=dashboard-component-chart-holder] {
+    background-color: transparent !important;
+}
