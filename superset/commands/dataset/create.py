@@ -31,8 +31,10 @@ from superset.commands.dataset.exceptions import (
     TableNotFoundValidationError,
 )
 from superset.daos.dataset import DatasetDAO
-from superset.exceptions import SupersetSecurityException
-from superset.extensions import security_manager
+from superset.daos.exceptions import DAOCreateFailedError
+from superset.exceptions import SupersetSecurityException, \
+    SupersetGenericDBErrorException
+from superset.extensions import db, security_manager
 from superset.sql_parse import Table
 from superset.utils.decorators import on_error, transaction
 
@@ -47,8 +49,22 @@ class CreateDatasetCommand(CreateMixin, BaseCommand):
     def run(self) -> Model:
         self.validate()
 
-        dataset = DatasetDAO.create(attributes=self._properties)
-        dataset.fetch_metadata()
+        try:
+            # Creates SqlaTable (Dataset)
+            dataset = DatasetDAO.create(attributes=self._properties, commit=False)
+
+            # Updates columns and metrics from the dataset
+            dataset.fetch_metadata(commit=False)
+            db.session.commit()
+        except (
+            SQLAlchemyError,
+            DAOCreateFailedError,
+            SupersetGenericDBErrorException,
+        ) as ex:
+            logger.warning(ex, exc_info=True)
+            db.session.rollback()
+            raise DatasetCreateFailedError() from ex
+
         return dataset
 
     def validate(self) -> None:
