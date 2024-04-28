@@ -93,6 +93,7 @@ import { QleroyDsfrMapChart } from 'qleroy-dsfr-map-chart';
 
 export default class MainPreset extends Preset {
   constructor() {
+    console.log("MAINPRESET.js HASH=YLAsZLXDnfF8ZEcB/sZ3IZqvs0UhyqgT/2q3WwPV");
     const experimentalPlugins = isFeatureEnabled(
       FeatureFlag.ChartPluginsExperimental,
     )

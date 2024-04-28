@@ -30,6 +30,10 @@ fi
 #
 if [ -f "${REQUIREMENTS_LOCAL}" ]; then
   echo "Installing local overrides at ${REQUIREMENTS_LOCAL}"
+  apt update && apt install -y git
+  apt install -y gdb
+  apt install -y net-tools
+  pip install debugpy
   pip install --no-cache-dir -r "${REQUIREMENTS_LOCAL}"
 else
   echo "Skipping local overrides"

@@ -102,6 +102,12 @@ export const DeckGLContainer = memo(
     }, [props.layers]);
 
     const { children = null, height, width } = props;
+    console.groupCollapsed("DeckGLContainer.tsx")
+    console.log("width", width);
+    console.log("height", height);
+    console.log("props.mapStyle", props.mapStyle);
+    console.log("props.mapboxApiAccessToken", props.mapboxApiAccessToken);
+    console.groupEnd();
 
     return (
       <>
@@ -117,8 +123,11 @@ export const DeckGLContainer = memo(
           >
             <StaticMap
               preserveDrawingBuffer
-              mapStyle={props.mapStyle || 'light'}
-              mapboxApiAccessToken={props.mapboxApiAccessToken}
+              //mapStyle={props.mapStyle || 'light'}
+              //mapboxApiAccessToken={props.mapboxApiAccessToken}
+              //mapStyle="https://api.maptiler.com/maps/streets/style.json?key=fqOygbsrpePMZkWrNxib"
+              //mapStyle="http://167.86.122.249:9005/static/assets/maplibre_styles/fiord-color-gl-style.json"
+              mapStyle="http://167.86.122.249:9005/static/assets/maplibre_styles/osm-bright-gl-style.json"
             />
           </DeckGL>
           {children}

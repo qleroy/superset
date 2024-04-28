@@ -129,7 +129,10 @@ def get_virtual_table_metadata(dataset: SqlaTable) -> list[ResultSetColumnType]:
                 level=ErrorLevel.ERROR,
             )
         )
-    return get_columns_description(dataset.database, dataset.schema, statements[0])
+    try:
+        return get_columns_description(dataset.database, dataset.schema, statements[0])
+    except SupersetGenericDBErrorException as ex:
+        raise SupersetGenericDBErrorException(message=_(ex.message)) from ex
 
 
 def get_columns_description(
@@ -150,6 +153,11 @@ def get_columns_description(
             result_set = SupersetResultSet(result, cursor.description, db_engine_spec)
             return result_set.columns
     except Exception as ex:
+        print(f"{ex=}")
+        print(f"{ex=}")
+        print(f"{ex=}")
+        print(f"{ex=}")
+        breakpoint()
         raise SupersetGenericDBErrorException(message=str(ex)) from ex
 
 

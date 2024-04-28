@@ -25,7 +25,7 @@ import ViewportMercator from 'viewport-mercator-project';
 import ScatterPlotGlowOverlay from './ScatterPlotGlowOverlay';
 import './MapBox.css';
 
-const NOOP = () => {};
+const NOOP = () => { };
 export const DEFAULT_MAX_ZOOM = 16;
 export const DEFAULT_POINT_RADIUS = 60;
 
@@ -101,6 +101,7 @@ class MapBox extends React.Component {
       hasCustomMetric,
       bounds,
     } = this.props;
+    console.groupCollapsed("MAPBOX");
     const { viewport } = this.state;
     const isDragging =
       viewport.isDragging === undefined ? false : viewport.isDragging;
@@ -119,13 +120,34 @@ class MapBox extends React.Component {
     ];
     const clusters = clusterer.getClusters(bbox, Math.round(viewport.zoom));
 
+    console.log("viewport", viewport);
+    console.log("viewport.altitude", viewport.altitude);
+    console.log("viewport.bearing", viewport.bearing);
+    console.log("viewport.latitude", viewport.latitude);
+    console.log("viewport.longitude", viewport.longitude);
+    console.log("viewport.maxPitch", viewport.maxPitch);
+    console.log("viewport.maxZoom", viewport.maxZoom);
+    console.log("viewport.minPitch", viewport.minPitch);
+    console.log("viewport.minZoom", viewport.minZoom);
+    console.log("viewport.pitch", viewport.pitch);
+    console.log("viewport.width", viewport.width);
+    console.log("viewport.zoom", viewport.zoom);
+    console.log("isDragging", isDragging);
+    console.log("offsetHorizontal", offsetHorizontal);
+    console.log("offsetVertical", offsetVertical);
+    console.log("bbox", bbox);
+    console.log("clusters", clusters);
+    console.groupEnd();
     return (
       <MapGL
         {...viewport}
-        mapStyle={mapStyle}
+        //mapStyle={mapStyle}
         width={width}
         height={height}
-        mapboxApiAccessToken={mapboxApiKey}
+        //mapboxApiAccessToken={mapboxApiKey}
+        //mapStyle="https://api.maptiler.com/maps/streets/style.json?key=fqOygbsrpePMZkWrNxib"
+        //mapStyle="http://167.86.122.249:9005/static/assets/maplibre_styles/osm-bright-gl-style.json"
+        mapStyle="http://167.86.122.249:9005/static/assets/maplibre_styles/fiord-color-gl-style.json"
         onViewportChange={this.handleViewportChange}
         preserveDrawingBuffer
       >

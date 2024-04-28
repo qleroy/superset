@@ -65,7 +65,7 @@ superset init
 echo_step "3" "Complete" "Setting up roles and perms"
 
 apt update
-apt install -y wget unzip
+apt install -y wget unzip git
 /app/docker/docker-dsfr.sh
 
 if [ "$SUPERSET_LOAD_EXAMPLES" = "yes" ]; then

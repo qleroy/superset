@@ -1,0 +1,10 @@
+at PluginPass.Program (/home/qleroy/qleroy/superset/superset-frontend/node_modules/babel-plugin-lodash/lib/index.js:102:44)
+[webpack-cli] [Error: EACCES: permission denied, unlink '/home/qleroy/qleroy/superset/superset/static/assets/maplibre_styles/osm-bright-gl-style.json'] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'unlink',
+  path: '/home/qleroy/qleroy/superset/superset/static/assets/maplibre_styles/osm-bright-gl-style.json'
+}
+➜  superset-frontend git:(wip-plugins) ✗ ls ../superset/static/assets/maplibre_styles/osm-bright-gl-style.json -alh
+-rw-rw-r-- 1 qleroy qleroy 70K Mar 24 13:18 ../superset/static/assets/maplibre_styles/osm-bright-gl-style.json
+➜  superset-frontend git:(wip-plugins) ✗

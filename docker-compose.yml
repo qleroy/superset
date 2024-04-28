@@ -19,13 +19,15 @@ x-superset-user: &superset-user root
 x-superset-depends-on: &superset-depends-on
   - db
   - redis
-x-superset-volumes: &superset-volumes
+x-superset-volumes:
   # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
+  &superset-volumes
   - ./docker:/app/docker
   - ./superset:/app/superset
   - ./superset-frontend:/app/superset-frontend
   - superset_home:/app/superset_home
   - ./tests:/app/tests
+  - ./superset/templates/superset/tail_css_custom_extra.css:/app/superset/static/assets/local/css/tail_css_custom_extra.css
 
 version: "3.7"
 services:
@@ -63,10 +65,13 @@ services:
     env_file: docker/.env
     image: *superset-image
     container_name: superset_app
-    command: ["/app/docker/docker-bootstrap.sh", "app"]
+    command: [ "/app/docker/docker-bootstrap.sh", "app" ]
     restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
     ports:
       - 8088:8088
+      - 5678:5678
     extra_hosts:
       - "host.docker.internal:host-gateway"
     user: *superset-user
@@ -108,7 +113,7 @@ services:
   superset-init:
     image: *superset-image
     container_name: superset_init
-    command: ["/app/docker/docker-init.sh"]
+    command: [ "/app/docker/docker-init.sh" ]
     env_file: docker/.env
     depends_on: *superset-depends-on
     user: *superset-user
@@ -121,7 +126,7 @@ services:
   superset-node:
     image: node:16
     container_name: superset_node
-    command: ["/app/docker/docker-frontend.sh"]
+    command: [ "/app/docker/docker-frontend.sh" ]
     env_file: docker/.env
     depends_on: *superset-depends-on
     environment:
@@ -131,7 +136,7 @@ services:
   superset-worker:
     image: *superset-image
     container_name: superset_worker
-    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+    command: [ "/app/docker/docker-bootstrap.sh", "worker" ]
     env_file: docker/.env
     restart: unless-stopped
     depends_on: *superset-depends-on
@@ -140,7 +145,11 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
-      test: ["CMD-SHELL", "celery -A superset.tasks.celery_app:app inspect ping -d celery@$$HOSTNAME"]
+      test:
+        [
+          "CMD-SHELL",
+          "celery -A superset.tasks.celery_app:app inspect ping -d celery@$$HOSTNAME"
+        ]
     # Bump memory limit if processing selenium / thumbnails on superset-worker
     # mem_limit: 2038m
     # mem_reservation: 128M
@@ -148,7 +157,7 @@ services:
   superset-worker-beat:
     image: *superset-image
     container_name: superset_worker_beat
-    command: ["/app/docker/docker-bootstrap.sh", "beat"]
+    command: [ "/app/docker/docker-bootstrap.sh", "beat" ]
     env_file: docker/.env
     restart: unless-stopped
     depends_on: *superset-depends-on
@@ -160,7 +169,7 @@ services:
   superset-tests-worker:
     image: *superset-image
     container_name: superset_tests_worker
-    command: ["/app/docker/docker-bootstrap.sh", "worker"]
+    command: [ "/app/docker/docker-bootstrap.sh", "worker" ]
     env_file: docker/.env
     environment:
       DATABASE_HOST: localhost
@@ -173,7 +182,11 @@ services:
     user: *superset-user
     volumes: *superset-volumes
     healthcheck:
-      test: ["CMD-SHELL", "celery inspect ping -A superset.tasks.celery_app:app -d celery@$$HOSTNAME"]
+      test:
+        [
+          "CMD-SHELL",
+          "celery inspect ping -A superset.tasks.celery_app:app -d celery@$$HOSTNAME"
+        ]
 
 volumes:
   superset_home:

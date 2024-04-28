@@ -132,7 +132,7 @@ def get_error_msg() -> str:
     if conf.get("SHOW_STACKTRACE"):
         error_msg = traceback.format_exc()
     else:
-        error_msg = "FATAL ERROR \n"
+        error_msg = "FATAL ERROR haha \n"
         error_msg += (
             "Stacktrace is hidden. Change the SHOW_STACKTRACE "
             "configuration setting to enable it"
