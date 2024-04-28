@@ -124,18 +124,30 @@ def get_virtual_table_metadata(dataset: SqlaTable) -> list[ResultSetColumnType]:
             )
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
     try:
         return get_columns_description(dataset.database, dataset.schema, statements[0])
     except SupersetGenericDBErrorException as ex:
         raise SupersetGenericDBErrorException(message=_(ex.message)) from ex
 =======
+=======
+>>>>>>> c615423e8 (update)
     return get_columns_description(
         dataset.database,
         dataset.catalog,
         dataset.schema,
         statements[0],
     )
+<<<<<<< HEAD
 >>>>>>> 6cf681df6 (feat(SIP-95): new endpoint for table metadata (#28122))
+=======
+=======
+    try:
+        return get_columns_description(dataset.database, dataset.schema, statements[0])
+    except SupersetGenericDBErrorException as ex:
+        raise SupersetGenericDBErrorException(message=_(ex.message)) from ex
+>>>>>>> 565c4640b (update)
+>>>>>>> c615423e8 (update)
 
 
 def get_columns_description(

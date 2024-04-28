@@ -378,7 +378,6 @@ export const mapboxStyle = {
     choices: [
       ['mapbox://styles/mapbox/streets-v9', t('Streets')],
       ['mapbox://styles/mapbox/dark-v9', t('Dark')],
-      //['mapbox://styles/mapbox/light-v9', t('Light')],
       ['http://167.86.122.249:9005/static/assets/maplibre_styles/osm-bright-gl-style.json', t('Light')],
       ['mapbox://styles/mapbox/satellite-streets-v9', t('Satellite Streets')],
       ['mapbox://styles/mapbox/satellite-v9', t('Satellite')],
